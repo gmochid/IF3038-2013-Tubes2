@@ -27,8 +27,6 @@ CREATE TABLE IF NOT EXISTS `Task` (
   `status` varchar(30) NOT NULL,
   `deadline` date NOT NULL,
   PRIMARY KEY (`taskID`)
-  FOREIGN KEY (`categoryID`) REFERENCES Category(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`username`) REFERENCES Users(`username`) ON UPDATE CASCADE ON DELETE RESTRICT,
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
@@ -40,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `Task` (
 CREATE TABLE IF NOT EXISTS `Category` (
   `categoryID` varchar(30) NOT NULL,
   `categoryname` varchar(30) NOT NULL,
-  PRIMARY KEY (`categoryID`),
+  PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
@@ -54,7 +52,6 @@ CREATE TABLE IF NOT EXISTS `Attachment` (
   `taskID` varchar(30) NOT NULL,
   `filepath` varchar(30) NOT NULL,
   PRIMARY KEY (`attachmentID`)
-  FOREIGN KEY (`taskID`) REFERENCES Task(`taskID`) ON UPDATE CASCADE ON DELETE RESTRICT,
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
@@ -68,10 +65,8 @@ CREATE TABLE IF NOT EXISTS `Comments` (
   `taskID` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `content` varchar(50) DEFAULT NULL,
-  `timestamps` timestamp(6) NOT NULL,
+  `timestamps` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`commentID`)
-  FOREIGN KEY (`taskID`) REFERENCES Task(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`username`) REFERENCES Users(`username`) ON UPDATE CASCADE ON DELETE RESTRICT,
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
@@ -82,9 +77,7 @@ CREATE TABLE IF NOT EXISTS `Comments` (
 
 CREATE TABLE IF NOT EXISTS `Tag` (
   `taskID` varchar(30) NOT NULL,
-  `tagname` varchar(30) NOT NULL,
-  PRIMARY KEY (`taskID`),
-  FOREIGN KEY (`taskID`) REFERENCES Task(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  `tagname` varchar(30) NOT NULL
 ) ENGINE=InnoDB;
 
 --
@@ -143,3 +136,17 @@ INSERT INTO `Tag` (`taskID`, `tagname`) VALUES
 (2, 'kuliah'),
 (2, 'individu'),
 (3, 'near deadline');
+
+ALTER TABLE `Task`
+	ADD CONSTRAINT `Task_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES Category(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	ADD CONSTRAINT `Task_ibfk_2`FOREIGN KEY (`username`) REFERENCES Users(`username`) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE `Attachment`
+	ADD CONSTRAINT `Attachment_ibfk_1` FOREIGN KEY (`taskID`) REFERENCES Task(`taskID`) ON UPDATE CASCADE ON DELETE RESTRICT;
+	
+ALTER TABLE `Comments`
+	ADD CONSTRAINT `Comments_ibfk_1` FOREIGN KEY (`taskID`) REFERENCES Category(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	ADD CONSTRAINT `Comments_ibfk_2` FOREIGN KEY (`username`) REFERENCES Users(`username`) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE `Tag`
+	ADD CONSTRAINT `Tag_ibfk_2` FOREIGN KEY (`taskID`) REFERENCES Category(`categoryID`) ON UPDATE CASCADE ON DELETE RESTRICT;
