@@ -6,4 +6,5 @@
 	include_once 'model/Tag.php';
 	include_once 'model/Task.php';
 	include_once 'model/Comment.php';
+	include_once 'model/Attachment.php';
 ?>

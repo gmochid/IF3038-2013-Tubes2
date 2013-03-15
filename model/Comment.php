@@ -15,7 +15,7 @@
 			if(mysqli_num_rows($result) > 0) {
 				$row = $result->fetch_row();
 				
-				$this->setData($row[1], $row[2], $row[3], $row[4]);
+				$this->setDataTS($row[1], $row[2], $row[3], $row[4]);
 			}
 			$this->id = $id;
 			
@@ -23,7 +23,7 @@
 		}
 		
 		/* METHOD */
-		public function setData($taskid, $username, $content, $timestamp) {
+		public function setDataTS($taskid, $username, $content, $timestamp) {
 			$this->taskid = $taskid;
 			$this->username = $username;
 			$this->content = $content;
