@@ -18,6 +18,7 @@
     	}
 		
 		/* METHOD */
+		//semua method ditaruh disini
 		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
