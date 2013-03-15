@@ -1,4 +1,6 @@
 <?php
+	include_once 'include.php';
+
     class User implements BaseModel {
     	/**
 		 * Construtor
@@ -15,16 +17,45 @@
 			// $avatar harusnya diinisialisasi di sini 
     	}
 		
+		/* METHOD */
+		
 		/* DATABASE FUNCTION UTILITY */
-		function addOnDB() {
+		public function addOnDB() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-		}
-		function editOnDB() {
+			$format = "INSERT INTO `user`  
+				(`username`, `password`, `fullname`, `birthplace`, `birthdate`, `email`, `avatar`) VALUES 
+				('%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+			$stmt = sprintf($format, $this->username, $this->password, $this->fullname, $this->birthplace, $this->birthdate,
+				$this->email, $this->avatar_path);
+			$result = mysqli_query($db, $stmt);
 			
+			$db->close();
 		}
-		function deleteOnDB() {
+		public function editOnDB() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
+			$format = "UPDATE `user` SET `password` = '%s', " + 
+				"`fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s'," + 
+				" `email` = '%s', `avatar` = '%s' WHERE `user`.`username` = '%s';";
+			$stmt = sprintf($format, $this->password, $this->fullname, $this->birthplace, $this->birthdate,
+				$this->email, $this->avatar_path, $this->username);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
 		}
+		public function deleteOnDB() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "DELETE FROM `user` WHERE `user`.`username` = '%s';";
+			$stmt = sprintf($format, $this->username);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
+		}
+		
+		/* GETTER AND SETTER */
+		//tulis di sini
 		
 		private $username;
 		private $password;
