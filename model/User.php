@@ -56,9 +56,9 @@
 		public function editOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "UPDATE `user` SET `password` = '%s', " + 
-				"`fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s'," + 
-				" `email` = '%s', `avatar` = '%s' WHERE `user`.`username` = '%s';";
+			$format = "UPDATE `user` SET `password` = '%s',  
+				`fullname` = '%s', `birthplace` = '%s', `birthdate` = '%s', 
+				`email` = '%s', `avatar` = '%s' WHERE `user`.`username` = '%s';";
 			$stmt = sprintf($format, $this->password, $this->fullname, $this->birthplace, $this->birthdate,
 				$this->email, $this->avatar_path, $this->username);
 			$result = mysqli_query($db, $stmt);
@@ -74,9 +74,6 @@
 			
 			$db->close();
 		}
-		
-		/* GETTER AND SETTER */
-		//tulis di sini
 		
 		var $username;
 		var $password;
