@@ -1,14 +1,14 @@
 <?php
     include_once 'include.php';
     
-    class Category implements BaseModel {
+    class Task implements BaseModel {
     	/**
 		 * CONSTRUCTOR
 		 */
 		function __construct($id) {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "SELECT * FROM `category` WHERE `categoryID` = '%s';";
+			$format = "SELECT * FROM `task` WHERE `taskID` = '%s';";
 			$stmt = sprintf($format, $id);
 			$result = mysqli_query($db, $stmt);
 			
@@ -23,18 +23,22 @@
 		}
 		
 		/* METHOD */
-		public function setData($name) {
-			$this->name = $name; 
+		public function setData($categoryID, $username, $taskname, $status, $deadline) {
+			$this->categoryID = $categoryID;
+			$this->username = $username;
+			$this->taskname = $taskname;
+			$this->status = $status;
+			$this->deadline = $deadline; 
     	}
 		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "INSERT INTO `category`  
-				(`categoryID`, `categoryname`) VALUES 
-				('%s', '%s');";
-			$stmt = sprintf($format, $this->id, $this->name);
+			$format = "INSERT INTO `task`  
+				(`taskID`, `categoryID`, `username`, `taskname`, `status`, `deadline`) VALUES 
+				('%s', '%s', '%s', '%s', '%s', '%s');";
+			$stmt = sprintf($format, $this->id, $this->categoryID, $this->username, $this->taskname, $this->status, $this->deadline);
 			$result = mysqli_query($db, $stmt);
 			
 			$db->close();
@@ -42,8 +46,8 @@
 		public function editOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "UPDATE `category` SET `name` = '%s' WHERE `category`.`categoryID` = '%s';";
-			$stmt = sprintf($format, $this->name, $this->id);
+			$format = "UPDATE `task` SET `categoryID` = '%s', `username` = '%s', `taskname` = '%s', `status` = '%s', `deadline` = '%s' WHERE `task`.`taskID` = '%s';";
+			$stmt = sprintf($format, $this->categoryID, $this->username, $this->taskname, $this->status, $this->deadline, $this->id);
 			$result = mysqli_query($db, $stmt);
 			
 			$db->close();
@@ -51,7 +55,7 @@
 		public function deleteOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "DELETE FROM `category` WHERE `category`.`categoryID` = '%s';";
+			$format = "DELETE FROM `task` WHERE `task`.`taskID` = '%s';";
 			$stmt = sprintf($format, $this->id);
 			$result = mysqli_query($db, $stmt);
 			
@@ -59,6 +63,10 @@
 		}
 		
 		var $id;
-		var $name; 
+		var $categoryID;
+		var $username;
+		var $taskname;
+		var $status;
+		var $deadline; 
 	}
 ?>

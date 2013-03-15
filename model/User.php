@@ -15,17 +15,15 @@
 			if(mysqli_num_rows($result) > 0) {
 				$row = $result->fetch_row();
 				
-				$this->setData($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);
-			} else {
-				$this->username = $username;
+				$this->setData($row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);
 			}
+			$this->username = $username;
 			
 			$db->close();
 		}
 		
 		/* METHOD */
-		public function setData($username, $password, $fullname, $birthplace, $birthdate, $email, $avatar_path) {
-    		$this->username = $username;
+		public function setData($password, $fullname, $birthplace, $birthdate, $email, $avatar_path) {
 			$this->password = $password;
 			$this->fullname = $fullname;
 			$this->birthplace = $birthplace;
