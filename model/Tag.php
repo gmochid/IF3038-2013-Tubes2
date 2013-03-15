@@ -40,22 +40,6 @@
 			return $tags;
 		}
 		
-		public function getTagsFromTagname($tagname) {
-			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
-			
-			$format = "SELECT * FROM `tag` WHERE `taskID` = '%s';";
-			$stmt = sprintf($format, $tagname);
-			$result = mysqli_query($db, $stmt);
-			
-			while($row = $result->fetch_row()) {
-				$tags[] = new Tag($row[0], $row[1]);
-			}
-			
-			$db->close();
-			
-			return $tags;
-		}
-		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);

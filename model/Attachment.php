@@ -28,6 +28,22 @@
 			$this->filepath = $filepath; 
     	}
 		
+		public function getAttachmentFromTaskID($taskid) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `attachment` WHERE `taskID` = '%s';";
+			$stmt = sprintf($format, $taskid);
+			$result = mysqli_query($db, $format);
+			
+			while($row = $result->fetch_row()) {
+				$attachments[] = new Attachment($row[0]);
+			}
+			
+			$db->close();
+			
+			return $attachments;
+		}
+		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);

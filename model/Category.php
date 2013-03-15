@@ -27,6 +27,21 @@
 			$this->name = $name; 
     	}
 		
+		public function getAllCategory() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `category` WHERE 1;";
+			$result = mysqli_query($db, $format);
+			
+			while($row = $result->fetch_row()) {
+				$categories[] = new Category($row[0]);
+			}
+			
+			$db->close();
+			
+			return $categories;
+		}
+		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
