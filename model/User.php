@@ -3,9 +3,28 @@
 
     class User implements BaseModel {
     	/**
-		 * Construtor
+		 * CONSTRUCTOR
 		 */
-    	function __construct($username, $password, $fullname, $birthplace, $birthdate, $email, $avatar_path) {
+		function __construct($username) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `user` WHERE `username` = '%s';";
+			$stmt = sprintf($format, $username);
+			$result = mysqli_query($db, $stmt);
+			
+			if(mysqli_num_rows($result) > 0) {
+				$row = $result->fetch_row();
+				
+				$this->setData($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6]);
+			} else {
+				$this->username = $username;
+			}
+			
+			$db->close();
+		}
+		
+		/* METHOD */
+		public function setData($username, $password, $fullname, $birthplace, $birthdate, $email, $avatar_path) {
     		$this->username = $username;
 			$this->password = $password;
 			$this->fullname = $fullname;
@@ -17,8 +36,9 @@
 			// $avatar harusnya diinisialisasi di sini 
     	}
 		
-		/* METHOD */
-		//semua method ditaruh disini
+		public function authenticate($password) {
+			return $this->password == $password;
+		}
 		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
@@ -58,13 +78,13 @@
 		/* GETTER AND SETTER */
 		//tulis di sini
 		
-		private $username;
-		private $password;
-		private $fullname;
-		private $birthplace;
-		private $birthdate;
-		private $email;
-		private $avatar_path;
-		private $avatar;
+		var $username;
+		var $password;
+		var $fullname;
+		var $birthplace;
+		var $birthdate;
+		var $email;
+		var $avatar_path;
+		var $avatar;
     }
 ?>
