@@ -2,6 +2,16 @@
 	include_once dirname(__FILE__).'\..\include.php';
     $dbg = new DBGetter();
 	$categories = $dbg->getAllCategory();
+	
+	if((isset($_POST['category'])) && (isset($_POST['name']))) {
+		$len = sizeof($categories);
+		$category = new Category($len + 1);
+		$category->setData($_POST['category'], 'gmochid2');
+		$category->addOnDB();
+		$category->setUsers($_POST['name'].';gmochid2');
+		
+		$categories = $dbg->getAllCategory();
+	}
 ?>
 <!DOCTYPE html>
 <head>
@@ -37,6 +47,7 @@
 		}
     ?>
     </ul>
+    <a class="categbutton" href="Pembuatan-Tugas.html">Add Task</a>
     <div align="right" >
     <a href="#category_form" id="register_pop">
         <input name="Button" type="button" value="Add Category" class="categbutton"/> </a>
@@ -47,19 +58,19 @@
         
         <div class="popup">
             <h2>Add Category</h2>
-            <p>Please enter category name and user who can access it</p>
-            <div>
-                <label for="category">Category Name</label>
-                <input type="text" id="category" value="" />
-            </div>
-            <div>
-                <label for="name">User (Seperated with ";")</label>
-                <input type="text" id="name" value="" />
-            </div>
-            <form action="#">
-            <div align="right">
-            	<input type="submit" value="Add Category" />
-     		</div>
+            <form action="dashboard.php" method="post">
+	            <p>Please enter category name and user who can access it</p>
+	            <div>
+	                <label for="category">Category Name</label>
+	                <input type="text" id="category" name="category" value="" />
+	            </div>
+	            <div>
+	                <label for="name">User (Seperated with ";")</label>
+	                <input type="text" id="name" name="name" value="" />
+	            </div>
+	            <div align="right">
+	            	<input type="submit" value="Add Category" />
+	     		</div>
 			</form>
             <a class="close" href="#close"></a>
   		</div>
