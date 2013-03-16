@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 16, 2013 at 07:12 AM
+-- Generation Time: Mar 16, 2013 at 07:18 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -73,7 +73,7 @@ INSERT INTO `category` (`categoryID`, `categoryname`) VALUES
 CREATE TABLE IF NOT EXISTS `category_user` (
   `categoryID` varchar(25) NOT NULL,
   `username` varchar(25) NOT NULL,
-  KEY `category_user_ibfk_1` (`categoryID`),
+  PRIMARY KEY (`categoryID`,`username`),
   KEY `category_user_ibfk_2` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS `category_user` (
 --
 
 INSERT INTO `category_user` (`categoryID`, `username`) VALUES
-('1', 'ordinaryhuman'),
 ('1', 'gmochid2'),
-('2', 'rubiano'),
+('2', 'gmochid2'),
+('1', 'ordinaryhuman'),
 ('2', 'ordinaryhuman'),
-('2', 'gmochid2');
+('2', 'rubiano');
 
 -- --------------------------------------------------------
 
