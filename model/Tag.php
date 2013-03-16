@@ -1,5 +1,5 @@
 <?php
-    include_once 'include.php';
+    include_once dirname(__FILE__).'\..\include.php';
     
     class Tag implements BaseModel {
     	/**

@@ -1,5 +1,5 @@
 <?php
-    include_once 'include.php';
+    include_once dirname(__FILE__).'\..\include.php';
     
     class Task implements BaseModel {
     	/**
@@ -15,7 +15,7 @@
 			if(mysqli_num_rows($result) > 0) {
 				$row = $result->fetch_row();
 				
-				$this->setData($row[1]);
+				$this->setData($row[0], $row[1], $row[2], $row[3], $row[4]);
 			}
 			$this->id = $id;
 			

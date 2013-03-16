@@ -1,11 +1,11 @@
 <?php
-	include_once 'utilities/db.php';
-	include_once 'model/BaseModel.php';
-    include_once 'model/User.php';
-	include_once 'model/Category.php';
-	include_once 'model/Tag.php';
-	include_once 'model/Task.php';
-	include_once 'model/Comment.php';
-	include_once 'model/Attachment.php';
-	include_once 'model/DBGetter.php';
+	include_once dirname(__FILE__).'/utilities/db.php';
+	include_once dirname(__FILE__).'/model/BaseModel.php';
+    include_once dirname(__FILE__).'/model/User.php';
+	include_once dirname(__FILE__).'/model/Category.php';
+	include_once dirname(__FILE__).'/model/Tag.php';
+	include_once dirname(__FILE__).'/model/Task.php';
+	include_once dirname(__FILE__).'/model/Comment.php';
+	include_once dirname(__FILE__).'/model/Attachment.php';
+	include_once dirname(__FILE__).'/model/DBGetter.php';
 ?>
