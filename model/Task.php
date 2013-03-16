@@ -15,7 +15,7 @@
 			if(mysqli_num_rows($result) > 0) {
 				$row = $result->fetch_row();
 				
-				$this->setData($row[0], $row[1], $row[2], $row[3], $row[4]);
+				$this->setData($row[1], $row[2], $row[3], $row[4], $row[5]);
 			}
 			$this->id = $id;
 			
@@ -30,6 +30,20 @@
 			$this->status = $status;
 			$this->deadline = $deadline; 
     	}
+		
+		public function getCategory() {
+			return new Category($this->categoryID);
+		}
+		
+		public function getTags() {
+			$dbg = new DBGetter();
+			return $dbg->getTagsFromTaskID($this->id);
+		}
+		
+		public function getAttachments() {
+			$dbg = new DBGetter();
+			return $dbg->getAttachmentFromTaskID($this->id);
+		}
 		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {

@@ -8,6 +8,7 @@
 			$format = "SELECT * FROM `comment` WHERE 1;";
 			$result = mysqli_query($db, $format);
 			
+			$comments = array();
 			while($row = $result->fetch_row()) {
 				$comments[] = new Comment($row[0]);
 			}
@@ -23,6 +24,7 @@
 			$format = "SELECT * FROM `category` WHERE 1;";
 			$result = mysqli_query($db, $format);
 			
+			$categories = array();
 			while($row = $result->fetch_row()) {
 				$categories[] = new Category($row[0]);
 			}
@@ -38,6 +40,7 @@
 			$format = "SELECT * FROM `task` WHERE 1;";
 			$result = mysqli_query($db, $format);
 			
+			$tasks = array();
 			while($row = $result->fetch_row()) {
 				$tasks[] = new Task($row[0]);
 			}
@@ -54,6 +57,7 @@
 			$stmt = sprintf($format, $taskid);
 			$result = mysqli_query($db, $format);
 			
+			$attachments = array();
 			while($row = $result->fetch_row()) {
 				$attachments[] = new Attachment($row[0]);
 			}
@@ -63,13 +67,14 @@
 			return $attachments;
 		}
     	
-		public function getCategoriesFromUser($username) {
+		public function getCategoriesFromUsername($username) {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
 			$format = "SELECT * FROM `category_user` WHERE `username` = '%s';";
 			$stmt = sprintf($format, $username);
 			$result = mysqli_query($db, $stmt);
 			
+			$categories = array();
 			while($row = $result->fetch_row()) {
 				$categories[] = new Category($row[0]);
 			}
@@ -86,6 +91,7 @@
 			$stmt = sprintf($format, $username);
 			$result = mysqli_query($db, $format);
 			
+			$comments = array();
 			while($row = $result->fetch_row()) {
 				$comments[] = new Comment($row[0]);
 			}
@@ -102,6 +108,7 @@
 			$stmt = sprintf($format, $taskid);
 			$result = mysqli_query($db, $format);
 			
+			$comments = array();
 			while($row = $result->fetch_row()) {
 				$comments[] = new Comment($row[0]);
 			}
@@ -118,6 +125,7 @@
 			$stmt = sprintf($format, $taskid);
 			$result = mysqli_query($db, $stmt);
 			
+			$tags = array();
 			while($row = $result->fetch_row()) {
 				$tags[] = new Tag($row[0], $row[1]);
 			}
@@ -134,6 +142,7 @@
 			$stmt = sprintf($format, $categoryid);
 			$result = mysqli_query($db, $stmt);
 			
+			$tasks = array();
 			while($row = $result->fetch_row()) {
 				$tasks[] = new Task($row[0]);
 			}
@@ -166,6 +175,7 @@
 			$stmt = sprintf($format, $username);
 			$result = mysqli_query($db, $stmt);
 			
+			$tasks = array();
 			while($row = $result->fetch_row()) {
 				$tasks[] = new Task($row[0]);
 			}
@@ -182,6 +192,7 @@
 			$stmt = sprintf($format, $status);
 			$result = mysqli_query($db, $stmt);
 			
+			$tasks = array();
 			while($row = $result->fetch_row()) {
 				$tasks[] = new Task($row[0]);
 			}
@@ -198,13 +209,14 @@
 			$stmt = sprintf($format, $categoryid);
 			$result = mysqli_query($db, $stmt);
 			
+			$users = array();
 			while($row = $result->fetch_row()) {
-				$categories[] = new User($row[0]);
+				$users[] = new User($row[0]);
 			}
 			
 			$db->close();
 			
-			return $categories;
+			return $users;
 		}
     }
 ?>
