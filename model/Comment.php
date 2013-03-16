@@ -36,53 +36,6 @@
 			$this->content = $content;
     	}
 		
-		public function getAllComments() {
-			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
-			
-			$format = "SELECT * FROM `comment` WHERE 1;";
-			$result = mysqli_query($db, $format);
-			
-			while($row = $result->fetch_row()) {
-				$comments[] = new Comment($row[0]);
-			}
-			
-			$db->close();
-			
-			return $comments;
-		}
-		
-		public function getCommentsFromUsername($username) {
-			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
-			
-			$format = "SELECT * FROM `comment` WHERE `username` = '%s';";
-			$stmt = sprintf($format, $username);
-			$result = mysqli_query($db, $format);
-			
-			while($row = $result->fetch_row()) {
-				$comments[] = new Comment($row[0]);
-			}
-			
-			$db->close();
-			
-			return $comments;
-		}
-		
-		public function getCommentsFromTaskID($taskid) {
-			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
-			
-			$format = "SELECT * FROM `comment` WHERE `taskID` = '%s';";
-			$stmt = sprintf($format, $taskid);
-			$result = mysqli_query($db, $format);
-			
-			while($row = $result->fetch_row()) {
-				$comments[] = new Comment($row[0]);
-			}
-			
-			$db->close();
-			
-			return $comments;
-		}
-		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
