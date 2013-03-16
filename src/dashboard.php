@@ -1,5 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php
+	include_once dirname(__FILE__).'\..\include.php';
+    $dbg = new DBGetter();
+	$categories = $dbg->getAllCategory();
+?>
+<!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>My Dashboard</title>
@@ -26,9 +30,12 @@
 <div class="kategori">
 	<h3> Kategori </h3>
     <ul class="navigation2">
-    <li> <a href="Kategori-All.html" target="categoryframe"> All </a></li>
-    <li> <a href="Kategori-Personal.html" target="categoryframe">  Personal </a></li>
-    <li> <a href="Kategori-Public.html" target="categoryframe"> Public </a></li>
+    <li> <a href="kategori.php" target="categoryframe"> All </a></li>
+    <?php
+    	foreach ($categories as $category) {
+			printf('<li> <a href="kategori.php?categoryID=%s" target="categoryframe">%s</a></li>', $category->id, $category->name);
+		}
+    ?>
     </ul>
     <div align="right" >
     <a href="#category_form" id="register_pop">
@@ -64,7 +71,6 @@
 <!-- Content -->
 <div>
 	<iframe src="kategori.php" width="605" height="340" name="categoryframe">  </iframe>
-
 </div>
 
 
