@@ -43,7 +43,7 @@
    	<p>
    		<a>Deadline :</a> <br>
    		<a id="rincian-deadline"></a><br>
-   		<form action="rinciantugas2.php" method="post" id="rincianinput-form-deadline">
+   		<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-deadline">
 	   		<input type="date" name="deadline" id="rincianinput-deadline" value="<?php echo $task->deadline; ?>"><br>
 	   		<input type="submit" id="rincianinput-deadline-submit" value="Submit"><br>
    		</form>
@@ -54,14 +54,14 @@
 				
 				foreach ($users as $user) {
 					printf("<li id='rincian-assignee-%s'>%s ", $user->username, $user->fullname);
-					printf('<a class="delete" href="rinciantugas2.php?action=delete&username=%s">(delete)</a>', $user->username);
+					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&username=%s">(delete)</a>', $task->id, $user->username);
 					printf("</li>");
 				}
    	    	?>
    	    	
    	    </ul>
-   	    <form action="rinciantugas2.php" method="post" id="rincianinput-form-assignee">
-   	    	<input type="text" id="rincianinput-assignee"><br>
+   	    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-assignee">
+   	    	<input type="text" id="rincianinput-assignee" name="assignee"><br>
    	    	<input type="submit" id="rincianinput-assignee-submit" value="submit"><br>
    	    </form>
    	    <br><a>Tag :</a><br>
@@ -71,18 +71,18 @@
 				
 				foreach ($tags as $tag) {
 					printf("<li id='rincian-tag-%s'>%s ", $tag->tagname, $tag->tagname);
-					printf('<a class="delete" href="rinciantugas2.php?action=delete&tagname=%s">(delete)</a>', $tag->tagname);
+					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&tagname=%s">(delete)</a>', $task->id, $tag->tagname);
 					printf('</li>');
 				}
    	    	?>
    	    </ul>
-   	    <form action="rinciantugas2.php" method="post" id="rincianinput-form-tag">
-   	  		<input type="text" id="rincianinput-tag"><br>
+   	    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-tag">
+   	  		<input type="text" id="rincianinput-tag" name="tag"><br>
    	  		<input type="submit" id="rincianinput-tag-submit" value="submit"><br>
    	  	</form>
    	  	<br><a>Status : <?php echo $task->status == 1 ? "DONE" : "NOT-DONE"; ?></a><br>
    	  	<a id="rincian-status"></a>
-   	  	<form action="rinciantugas2.php" method="post" id="rincianinput-form-status">
+   	  	<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-status">
 	   	  	<input type="radio" name="status" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
 	   	  	<input type="radio" name="status" value="0" <?php echo $task->status == 1 ? "":"checked"; ?> > NOT-DONE<br>
 	   	  	<input type="submit" id="rincianinput-status-submit" value="submit"><br>

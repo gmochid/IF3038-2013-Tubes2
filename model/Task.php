@@ -86,6 +86,47 @@
 			$db->close();
 		}
 		
+		public function addUser($username) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "INSERT INTO `task_user` (`taskID`, `userID`) VALUES ('%s','%s');";
+			$stmt = sprintf($format, $this->id, $username);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
+		}
+		
+		public function addTag($tagname) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "INSERT INTO `tag` (`taskID`, `tagname`) VALUES ('%s','%s');";
+			$stmt = sprintf($format, $this->id, $tagname);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
+		}
+		
+		public function deleteUser($username) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "DELETE FROM `task_user` WHERE `taskID` = '%s' AND `userID` = '%s';";
+			$stmt = sprintf($format, $this->id, $username);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
+		}
+		
+		public function deleteTag($tagname) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "DELETE FROM `tag` WHERE `taskID` = '%s' AND `tagname` = '%s';";
+			echo sprintf($format, $this->id, $tagname);
+			$stmt = sprintf($format, $this->id, $tagname);
+			$result = mysqli_query($db, $stmt);
+			
+			$db->close();
+		}
+		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
