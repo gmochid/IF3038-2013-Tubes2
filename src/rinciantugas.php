@@ -39,62 +39,73 @@
 <div class="TaskBoard">
 
 <h2 align="center"><?php echo $task->taskname; ?></h2>
-<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post">
-	<div align="center">
-	   	<p>
-	   		<a>Deadline :</a> <br>
-	   		<a id="rincian-deadline"></a><br>
-	   		<input type="date" name="deadline" id="rincianinput-deadline" value="<?php echo $task->deadline; ?>">
-	   		<div class="iinfo" class="fieldhelp"></div>
-	   	    <a>Asignee :</a><br> 
-	   	    <a id="rincian-assignee"></a><br>
-	   	    <input type="text" name="assignee" id="rincianinput-assignee" value="<?php
-					$users = $task->getUsers();
-					$arr = Array();
-					
-					foreach ($users as $user) {
-						$arr[] = $user->username;
-					}
-					echo implode(", ", $arr);
-	   	    	?>">
-	   	    <div class="iinfo" class="fieldhelp"></div><br>
-	   	    <a>Tag :</a><br>
-	   	    <a id="rincian-tag"></a>
-	   	  	<br>
-	   	  	<input type="text" name="tag" id="rincianinput-tag" value="<?php
-					$tags = $task->getTags();
-					$arr = Array();
-					
-					foreach ($tags as $tag) {
-						$arr[] = $tag->tagname;
-					}
-					echo implode(", ", $arr);
-	   	    	?>">
-	   	  	<div class="iinfo" class="fieldhelp"></div><br>
-	   	  	<a>Status :</a><br>
-	   	  	<a id="rincian-status"></a>
+<div align="left">
+   	<p>
+   		<a>Deadline :</a> <br>
+   		<a id="rincian-deadline"></a><br>
+   		<form action="rinciantugas2.php" method="post" id="rincianinput-form-deadline">
+	   		<input type="date" name="deadline" id="rincianinput-deadline" value="<?php echo $task->deadline; ?>"><br>
+	   		<input type="submit" id="rincianinput-deadline-submit" value="Submit"><br>
+   		</form>
+   	    <br><a>Asignee :</a><br> 
+   	    <ul>
+   	    	<?php
+				$users = $task->getUsers();
+				
+				foreach ($users as $user) {
+					printf("<li id='rincian-assignee-%s'>%s ", $user->username, $user->fullname);
+					printf('<a class="delete" href="rinciantugas2.php?action=delete&username=%s">(delete)</a>', $user->username);
+					printf("</li>");
+				}
+   	    	?>
+   	    	
+   	    </ul>
+   	    <form action="rinciantugas2.php" method="post" id="rincianinput-form-assignee">
+   	    	<input type="text" id="rincianinput-assignee"><br>
+   	    	<input type="submit" id="rincianinput-assignee-submit" value="submit"><br>
+   	    </form>
+   	    <br><a>Tag :</a><br>
+   	    <ul>
+   	    	<?php
+				$tags = $task->getTags();
+				
+				foreach ($tags as $tag) {
+					printf("<li id='rincian-tag-%s'>%s ", $tag->tagname, $tag->tagname);
+					printf('<a class="delete" href="rinciantugas2.php?action=delete&tagname=%s">(delete)</a>', $tag->tagname);
+					printf('</li>');
+				}
+   	    	?>
+   	    </ul>
+   	    <form action="rinciantugas2.php" method="post" id="rincianinput-form-tag">
+   	  		<input type="text" id="rincianinput-tag"><br>
+   	  		<input type="submit" id="rincianinput-tag-submit" value="submit"><br>
+   	  	</form>
+   	  	<br><a>Status : <?php echo $task->status == 1 ? "DONE" : "NOT-DONE"; ?></a><br>
+   	  	<a id="rincian-status"></a>
+   	  	<form action="rinciantugas2.php" method="post" id="rincianinput-form-status">
 	   	  	<input type="radio" name="status" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
 	   	  	<input type="radio" name="status" value="0" <?php echo $task->status == 1 ? "":"checked"; ?> > NOT-DONE<br>
-	    </p>
-	    <p> Attachment: </p>
-	    <?php
-	    	foreach ($attachments as $attachment) {
-	    		if($attachment->type == 'file') {
-					printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
-				} else if($attachment->type == 'image') {
-					printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
-				} else if($attachment->type == 'video') {
-					
-					printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
-					printf('<source src="%s">', $attachment->getPath());
-					printf('</video><br><br>');
-				}
+	   	  	<input type="submit" id="rincianinput-status-submit" value="submit"><br>
+	   	</form>
+    </p>
+    <p> Attachment: </p>
+    <?php
+    	foreach ($attachments as $attachment) {
+    		if($attachment->type == 'file') {
+				printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
+			} else if($attachment->type == 'image') {
+				printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
+			} else if($attachment->type == 'video') {
+				
+				printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
+				printf('<source src="%s">', $attachment->getPath());
+				printf('</video><br><br>');
 			}
-	    ?>
-		<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
-		<input type="submit" value="Save Task" class="buttonbox2" id="rincianbutton-save" onclick="savetask()"/>
-	</div>
-</form>
+		}
+    ?>
+	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
+	<input type="button" value="Save Task" class="buttonbox2" id="rincianbutton-save" onclick="savetask()"/>
+</div>
 
 <hr noshade="noshade" />
 
