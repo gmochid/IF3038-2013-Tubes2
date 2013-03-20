@@ -45,6 +45,12 @@
 			return $dbg->getAttachmentFromTaskID($this->id);
 		}
 		
+		public function getUsers() {
+			$dbg = new DBGetter();
+			return $dbg->getUsersFromTaskID($this->id);
+			
+		}
+		
 		public function setTags($tags) {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			

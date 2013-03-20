@@ -1,8 +1,15 @@
 <?php
     include_once dirname(__FILE__).'\..\include.php';
+	
+	$dbg = new DBGetter();
 	if(!isset($_GET['taskid'])) {
 		die('RATA DENGAN TANAH!');
-	} else {
+	}
+	
+	$task = new Task($_GET['taskid']);
+	
+	$attachments = $dbg->getAttachmentFromTaskID($task->id);
+	print_r($attachments);
 ?>
 <!DOCTYPE html>
 <head>
@@ -20,7 +27,7 @@
 <img src="../images/images/Header_3_ip_01.gif"/><img src="../images/images/Header_3_ip_02.gif" /><a href="Dashboard.html"><img src="../images/images/Header_3_ip_03.gif" /></a><img src="../images/images/Header_3_ip_04.gif"  />
 
   	<ul class="navigation">
-		<li> <a href="Dashboard.html"> Dashboard </a> </li>
+		<li> <a href="dashboard.php"> Dashboard </a> </li>
         <li> <a href="profile.html"> Profile </a> </li>
         <li> <a href="../Index.html"> Log Out </a> </li>
     </ul>
@@ -30,53 +37,55 @@
 <!-- Content -->
 <div class="TaskBoard">
 
-<h2 align="center"> Tubes Progin </h2>
+<h2 align="center"><?php echo $task->taskname; ?></h2>
 
 <div align="center">
 
-   	<p>Deadline : <span id="deadline">February 22, 2013 </span><br />
-   	  Asignee : <span id="asignee">Patrick Lumban Tobing, Hanif Eridaputra, Novriady Saputra </span><br />
-   	  Tag : <span id="tag">#HTML, #CSS, #Javascript </span>
-   	  
-    </p>
+   	<p>
+   		Deadline : <span id="deadline">
+   			<?php echo date("j F Y", strtotime($task->deadline)); ?>
+   			</span><br />
+   	    Asignee : <span id="asignee">
+   	    	<?php
+				$users = $task->getUsers();
+				$arr = Array();
+				
+				foreach ($users as $user) {
+					$arr[] = $user->fullname;
+				}
+				echo implode(", ", $arr);
+   	    	?>
+   	    	</span><br />
+   	  Tag : <span id="tag">
+			<?php
+				$tags = $task->getTags();
+				$arr = Array();
+				
+				foreach ($tags as $tag) {
+					$arr[] = "#" . $tag->tagname;
+				}
+				echo implode(", ", $arr);
+   	    	?>
+   	  	</span>
+    </p>    
 </div>
 
 <div align="center">
-    <a href="../doc/TUBES I.pdf" target="_blank">Download Soal Tubes Progin</a>
-</div>
-
-<div align="center">
-	<a href="#photo1" id="register_pop">
-	<img src="../images/secret01-1024x682.jpg" class="imagedetail"/></a>
-    
-    <a href="#photo2" id="register_pop">
-    <img src="../images/217123_425142407550158_487812540_n.jpg" class="imagedetail"/></a>
-    
-    <!-- Image 1 -->
-    <a href="#x" class="overlay" id="photo1"> </a>
-        <div class="popup">
-        	<img src="../images/secret01-1024x682.jpg" class="phototask"/>
-            <a class="close" href="#close"></a>
-        </div>
-	<!-- Image 2 -->
-	<a href="#x" class="overlay" id="photo2"> </a>
-    	<div class="popup">
-        	<img src="../images/217123_425142407550158_487812540_n.jpg" />
-        	<a class="close" href="#close"></a>
-        </div>
-</div>
-
-<div align="center">
-	<div> Video about Tubes Progin </div>
-    <a href="#video" id="register_pop">
-    <img src="../images/Screen Shot 2013-02-22 at 3.10.28 AM.png" class="imagedetail"/></a>
-    <!-- Video -->
-    <a href="#x" class="overlay" id="video"> </a>
-        <div class="popup">
-            <video src="../images/HYUNA - 'Bubble Pop!' (Teaser).mp4" controls>
-            <a class="close" href="#close"></a>
-        </div>
-
+    <p> Attachment: </p>
+    <?php
+    	foreach ($attachments as $attachment) {
+    		if($attachment->type == 'file') {
+				printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
+			} else if($attachment->type == 'image') {
+				printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
+			} else if($attachment->type == 'video') {
+				
+				printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
+				printf('<source src="%s">', $attachment->getPath());
+				printf('</video><br><br>');
+			}
+		}
+    ?>
 </div>
 
 <div>
@@ -136,6 +145,3 @@
 
 </body>
 </html>
-<?php
-	}
-?>

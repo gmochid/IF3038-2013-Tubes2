@@ -21,9 +21,10 @@
 	if ($_FILES["attachment"]["error"] == 0) {
 		$attachment = new Attachment(DB_IDGenerator('attachment'));
 		$attachment->taskid = $task->id;
-		$attachment->filepath = "../upload/attachments/att_" . $task->id . "_" . $_FILES["attachment"]["name"];
-		move_uploaded_file($_FILES["attachment"]["tmp_name"], $attachment->filepath);
+		$attachment->filename = "att_" . $task->id . "_" . $_FILES["attachment"]["name"];
+		move_uploaded_file($_FILES["attachment"]["tmp_name"], $attachment->getPath());
 		$attachment->addOnDB();
 	}
-    header("Location: dashboard.php");
+	
+    header(sprintf("Location: dashboard.php?taskid=%s", $task->id));
 ?>

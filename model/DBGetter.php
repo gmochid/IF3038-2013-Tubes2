@@ -103,7 +103,7 @@
 			
 			$format = "SELECT * FROM `attachment` WHERE `taskID` = '%s';";
 			$stmt = sprintf($format, $taskid);
-			$result = mysqli_query($db, $format);
+			$result = mysqli_query($db, $stmt);
 			
 			$attachments = array();
 			while($row = $result->fetch_row()) {
@@ -260,6 +260,23 @@
 			$users = array();
 			while($row = $result->fetch_row()) {
 				$users[] = new User($row[0]);
+			}
+			
+			$db->close();
+			
+			return $users;
+		}
+		
+		public function getUsersFromTaskID($taskid) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `task_user` WHERE `taskID` = '%s';";
+			$stmt = sprintf($format, $taskid);
+			$result = mysqli_query($db, $stmt);
+			
+			$users = array();
+			while($row = $result->fetch_row()) {
+				$users[] = new User($row[1]);
 			}
 			
 			$db->close();
