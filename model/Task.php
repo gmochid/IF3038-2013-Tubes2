@@ -76,7 +76,6 @@
 			$result = mysqli_query($db, $stmt);
 			
 			$arr_user = explode(',', $users);
-			print_r($arr_user);
 			echo $users;
 			foreach ($arr_user as $user) {
 				$format = "INSERT INTO `task_user` (`taskID`, `userID`) VALUES ('%s','%s');";

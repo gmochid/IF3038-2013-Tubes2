@@ -9,15 +9,16 @@
 	$task = new Task($_GET['taskid']);
 	
 	$attachments = $dbg->getAttachmentFromTaskID($task->id);
-	print_r($attachments);
 ?>
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Task Detail</title>
 <link rel='stylesheet' type="text/css" href="../style/Design.css"/>
+<script type="text/javascript" src="../script/global.js"></script>
 <script type="text/javascript" src="../script/calendar.js"></script>
 <script type="text/javascript" src="../script/validation.js"></script>
+<script type="text/javascript" src="../script/rinciantugas.js"></script>
 </head>
 
 <body class="main">
@@ -38,59 +39,62 @@
 <div class="TaskBoard">
 
 <h2 align="center"><?php echo $task->taskname; ?></h2>
-
-<div align="center">
-
-   	<p>
-   		Deadline : <span id="deadline">
-   			<?php echo date("j F Y", strtotime($task->deadline)); ?>
-   			</span><br />
-   	    Asignee : <span id="asignee">
-   	    	<?php
-				$users = $task->getUsers();
-				$arr = Array();
-				
-				foreach ($users as $user) {
-					$arr[] = $user->fullname;
+<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post">
+	<div align="center">
+	   	<p>
+	   		<a>Deadline :</a> <br>
+	   		<a id="rincian-deadline"></a><br>
+	   		<input type="date" name="deadline" id="rincianinput-deadline" value="<?php echo $task->deadline; ?>">
+	   		<div class="iinfo" class="fieldhelp"></div>
+	   	    <a>Asignee :</a><br> 
+	   	    <a id="rincian-assignee"></a><br>
+	   	    <input type="text" name="assignee" id="rincianinput-assignee" value="<?php
+					$users = $task->getUsers();
+					$arr = Array();
+					
+					foreach ($users as $user) {
+						$arr[] = $user->username;
+					}
+					echo implode(", ", $arr);
+	   	    	?>">
+	   	    <div class="iinfo" class="fieldhelp"></div><br>
+	   	    <a>Tag :</a><br>
+	   	    <a id="rincian-tag"></a>
+	   	  	<br>
+	   	  	<input type="text" name="tag" id="rincianinput-tag" value="<?php
+					$tags = $task->getTags();
+					$arr = Array();
+					
+					foreach ($tags as $tag) {
+						$arr[] = $tag->tagname;
+					}
+					echo implode(", ", $arr);
+	   	    	?>">
+	   	  	<div class="iinfo" class="fieldhelp"></div><br>
+	   	  	<a>Status :</a><br>
+	   	  	<a id="rincian-status"></a>
+	   	  	<input type="radio" name="status" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
+	   	  	<input type="radio" name="status" value="0" <?php echo $task->status == 1 ? "":"checked"; ?> > NOT-DONE<br>
+	    </p>
+	    <p> Attachment: </p>
+	    <?php
+	    	foreach ($attachments as $attachment) {
+	    		if($attachment->type == 'file') {
+					printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
+				} else if($attachment->type == 'image') {
+					printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
+				} else if($attachment->type == 'video') {
+					
+					printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
+					printf('<source src="%s">', $attachment->getPath());
+					printf('</video><br><br>');
 				}
-				echo implode(", ", $arr);
-   	    	?>
-   	    	</span><br />
-   	  Tag : <span id="tag">
-			<?php
-				$tags = $task->getTags();
-				$arr = Array();
-				
-				foreach ($tags as $tag) {
-					$arr[] = "#" . $tag->tagname;
-				}
-				echo implode(", ", $arr);
-   	    	?>
-   	  	</span>
-    </p>    
-</div>
-
-<div align="center">
-    <p> Attachment: </p>
-    <?php
-    	foreach ($attachments as $attachment) {
-    		if($attachment->type == 'file') {
-				printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
-			} else if($attachment->type == 'image') {
-				printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
-			} else if($attachment->type == 'video') {
-				
-				printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
-				printf('<source src="%s">', $attachment->getPath());
-				printf('</video><br><br>');
 			}
-		}
-    ?>
-</div>
-
-<div>
-	<input type="button" value="Edit Task" class="buttonbox2" onclick="edittask()"/>
-</div>
+	    ?>
+		<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
+		<input type="submit" value="Save Task" class="buttonbox2" id="rincianbutton-save" onclick="savetask()"/>
+	</div>
+</form>
 
 <hr noshade="noshade" />
 
