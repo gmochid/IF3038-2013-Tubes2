@@ -26,6 +26,8 @@
 	<title>My Dashboard</title>
     <link rel='stylesheet' type="text/css" href="../style/Design.css"/>
     <script type="text/javascript" src="../script/validation.js"> </script>
+    <script type="text/javascript" src="../script/global.js"> </script>
+    <script type="text/javascript" src="../script/dashboard.js"> </script>
 </head>
 
 <body class="main">
@@ -47,19 +49,19 @@
 <div class="kategori">
 	<h3> Kategori </h3>
     <ul class="navigation2">
-    <li> <a href="kategori.php" target="categoryframe" id="kategori-all"> All </a></li>
+    <li> <a href="kategori.php" target="categoryframe" id="category-all" onclick="selectCategory(null)"> All </a></li>
     <?php
     	foreach ($categories as $category) {
 			printf('<li>');
 			if($category->creatorID == 'gmochid2') {
 				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="../images/delete.png"></img></a>', $category->id);
 			}
-			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="kategori-%d">%s</a>', $category->id, $category->name, $category->name);
+			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="category-%d" onclick="selectCategory(category-%d)">%s</a>', $category->id, $category->id, $category->id, $category->name);
 			printf('</li>');
 		}
     ?>
     </ul>
-    <a class="categbutton" href="Pembuatan-Tugas.html">Add Task</a>
+    <a class="categbutton" href="Pembuatan-Tugas.html" id="addtask_button">Add Task</a>
     <div align="right" >
     <a href="#category_form" id="register_pop">
         <input name="Button" type="button" value="Add Category" class="categbutton"/> </a>
