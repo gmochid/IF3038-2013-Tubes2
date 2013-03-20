@@ -45,6 +45,42 @@
 			return $dbg->getAttachmentFromTaskID($this->id);
 		}
 		
+		public function setTags($tags) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "DELETE FROM `tag` WHERE `tag`.`taskID` = '%s';";
+			$stmt = sprintf($format, $this->id);
+			$result = mysqli_query($db, $stmt);
+			
+			$arr_tags = explode(',', $tags);
+			foreach ($arr_tags as $tag) {
+				$format = "INSERT INTO `tag` (`taskID`, `tagname`) VALUES ('%s','%s');";
+				$stmt = sprintf($format, $this->id, $tag);
+				$result = mysqli_query($db, $stmt);
+			}
+			
+			$db->close();
+		}
+		
+		public function setUsers($users) {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "DELETE FROM `task_user` WHERE `task_user`.`taskID` = '%s';";
+			$stmt = sprintf($format, $this->id);
+			$result = mysqli_query($db, $stmt);
+			
+			$arr_user = explode(',', $users);
+			print_r($arr_user);
+			echo $users;
+			foreach ($arr_user as $user) {
+				$format = "INSERT INTO `task_user` (`taskID`, `userID`) VALUES ('%s','%s');";
+				$stmt = sprintf($format, $this->id, $user);
+				$result = mysqli_query($db, $stmt);
+			}
+			
+			$db->close();
+		}
+		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);

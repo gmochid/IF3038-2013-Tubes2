@@ -38,7 +38,7 @@
 <img src="../images/images/Header_3_ip_01.gif"/><img src="../images/images/Header_3_ip_02.gif" /><a href="Dashboard.html"><img src="../images/images/Header_3_ip_03.gif" /></a><img src="../images/images/Header_3_ip_04.gif"  />
 
   	<ul class="navigation">
-		<li> <a href="Dashboard.html"> Dashboard </a> </li>
+		<li> <a href="dashboard.php"> Dashboard </a> </li>
         <li> <a href="profile.html"> Profile </a> </li>
         <li> <a href="../Index.html"> Log Out </a> </li>
     </ul>
@@ -56,12 +56,12 @@
 			if($category->creatorID == 'gmochid2') {
 				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="../images/delete.png"></img></a>', $category->id);
 			}
-			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="category-%d" onclick="selectCategory(category-%d)">%s</a>', $category->id, $category->id, $category->id, $category->name);
+			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="%d" onclick="selectCategory(\'%s\')">%s</a>', $category->id, $category->id, $category->id, $category->name);
 			printf('</li>');
 		}
     ?>
     </ul>
-    <a class="categbutton" href="Pembuatan-Tugas.html" id="addtask_button">Add Task</a>
+    <a class="categbutton" href="addtugas.php" id="addtask_button">Add Task</a>
     <div align="right" >
     <a href="#category_form" id="register_pop">
         <input name="Button" type="button" value="Add Category" class="categbutton"/> </a>

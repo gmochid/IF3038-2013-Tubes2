@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2013 at 09:59 AM
+-- Generation Time: Mar 20, 2013 at 10:41 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS `attachment` (
 INSERT INTO `attachment` (`attachmentID`, `taskID`, `filepath`) VALUES
 ('1', '1', ''),
 ('2', '1', ''),
-('3', '2', '');
+('3', '2', ''),
+('4', '5', '../upload/attachments/att_5_te');
 
 -- --------------------------------------------------------
 
@@ -135,7 +136,9 @@ INSERT INTO `tag` (`taskID`, `tagname`) VALUES
 ('1', 'berkelompok'),
 ('2', 'kuliah'),
 ('2', 'individu'),
-('3', 'neardeadline');
+('3', 'neardeadline'),
+('5', 'asf'),
+('5', 'af');
 
 -- --------------------------------------------------------
 
@@ -163,7 +166,8 @@ INSERT INTO `task` (`taskID`, `categoryID`, `username`, `taskname`, `status`, `d
 ('1', '1', 'ordinaryhuman', 'Mengerjakan Tugas Progin', 1, '2013-03-20'),
 ('2', '1', 'ordinaryhuman', 'Mengerjakan Tugas Kripto', 0, '2013-03-22'),
 ('3', '2', 'gmochid2', 'Bermain Dota', 1, '2013-03-25'),
-('4', '1', 'gmochid2', 'Mengerjakan Tugas Sister', 0, '2013-03-23');
+('4', '1', 'gmochid2', 'Mengerjakan Tugas Sister', 0, '2013-03-23'),
+('5', '2', 'gmochid2', 'coba', 0, '2013-03-12');
 
 -- --------------------------------------------------------
 
@@ -173,13 +177,18 @@ INSERT INTO `task` (`taskID`, `categoryID`, `username`, `taskname`, `status`, `d
 
 CREATE TABLE IF NOT EXISTS `task_user` (
   `taskID` varchar(30) NOT NULL,
-  `userID` varchar(30) NOT NULL
+  `userID` varchar(30) NOT NULL,
+  KEY `task_user_ibfk_1` (`taskID`),
+  KEY `task_user_ibfk_2` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `task_user`
 --
 
+INSERT INTO `task_user` (`taskID`, `userID`) VALUES
+('5', 'rubiano'),
+('5', 'gmochid2');
 
 -- --------------------------------------------------------
 
@@ -238,15 +247,15 @@ ALTER TABLE `tag`
   ADD CONSTRAINT `tag_ibfk_1` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `task_user`
---
-ALTER TABLE `task_user`
-  ADD CONSTRAINT `task_user_ibfk_1` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `task_user_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
-  
---
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `task_user`
+--
+ALTER TABLE `task_user`
+  ADD CONSTRAINT `task_user_ibfk_1` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_user_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;

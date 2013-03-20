@@ -2,6 +2,22 @@
 	include_once dirname(__FILE__).'\..\include.php';
 	
     class DBGetter {
+    	public function getAllAttachment() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `attachment` WHERE 1;";
+			$result = mysqli_query($db, $format);
+			
+			$attachments = array();
+			while($row = $result->fetch_row()) {
+				$attachments[] = new Attachment($row[0]);
+			}
+			
+			$db->close();
+			
+			return $attachments;
+		}
+		
     	public function getAllComment() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
@@ -50,6 +66,38 @@
 			return $tasks;
 		}
 		
+		public function getAllTag() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `tag` WHERE 1;";
+			$result = mysqli_query($db, $format);
+			
+			$tags = array();
+			while($row = $result->fetch_row()) {
+				$tags[] = new Tag($row[0]);
+			}
+			
+			$db->close();
+			
+			return $tags;
+		}
+		
+		public function getAllUser() {
+			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
+			
+			$format = "SELECT * FROM `task` WHERE 1;";
+			$result = mysqli_query($db, $format);
+			
+			$users = array();
+			while($row = $result->fetch_row()) {
+				$users[] = new User($row[0]);
+			}
+			
+			$db->close();
+			
+			return $users;
+		}
+		
 		public function getAttachmentFromTaskID($taskid) {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
@@ -70,7 +118,7 @@
 		public function getCategoriesFromUsername($username) {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "SELECT * FROM `category_user` WHERE `username` = '%s';";
+			$format = "SELECT DISTINCT * FROM `category_user` WHERE `username` = '%s';";
 			$stmt = sprintf($format, $username);
 			$result = mysqli_query($db, $stmt);
 			
@@ -219,4 +267,43 @@
 			return $users;
 		}
     }
+
+	function DB_IDGenerator($dbtable) {
+		$dbg = new DBGetter();
+		if($dbtable == 'attachment') {
+			$i = 1;
+			$x = new Attachment($i);
+			while($x->taskid != null) {
+				$i++;
+				$x = new Attachment($i);
+			}
+			return $i;
+		} else if($dbtable == 'category') {
+			$i = 1;
+			$x = new Category($i);
+			while($x->categoryname != null) {
+				$i++;
+				$x = new Category($i);
+			}
+			return $i;
+		} else if($dbtable == 'comment') {
+			$dbg = new DBGetter();
+			$comments = $dbg->getAllComment();
+			$i = $comments[sizeof($comments) + 1]; 
+			$x = new Comment($i);
+			while($x->content != null) {
+				$i++;
+				$x = new Comment($i);
+			}
+			return $i;
+		} else if($dbtable == 'task') {
+			$i = 1;
+			$x = new Task($i);
+			while($x->taskname != null) {
+				$i++;
+				$x = new Task($i);
+			}
+			return $i;
+		}
+	}
 ?>
