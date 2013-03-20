@@ -11,6 +11,13 @@
 		$category->setUsers($_POST['name'].';gmochid2');
 		
 		$categories = $dbg->getAllCategory();
+	} else if((isset($_GET['action'])) && (isset($_GET['categoryID']))) {
+		if($GET['action'] = 'delete') {
+			$category = new Category($_GET['categoryID']);
+			$category->deleteOnDB();
+			
+			$categories = $dbg->getAllCategory();
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -40,10 +47,15 @@
 <div class="kategori">
 	<h3> Kategori </h3>
     <ul class="navigation2">
-    <li> <a href="kategori.php" target="categoryframe"> All </a></li>
+    <li> <a href="kategori.php" target="categoryframe" id="kategori-all"> All </a></li>
     <?php
     	foreach ($categories as $category) {
-			printf('<li> <a href="kategori.php?categoryID=%s" target="categoryframe">%s</a></li>', $category->id, $category->name);
+			printf('<li>');
+			if($category->creatorID == 'gmochid2') {
+				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="../images/delete.png"></img></a>', $category->id);
+			}
+			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="kategori-%d">%s</a>', $category->id, $category->name, $category->name);
+			printf('</li>');
 		}
     ?>
     </ul>
@@ -81,7 +93,7 @@
 
 <!-- Content -->
 <div>
-	<iframe src="kategori.php" width="605" height="340" name="categoryframe">  </iframe>
+	<iframe src="kategori.php" width="605" height="340" name="categoryframe" id="categoryframe">  </iframe>
 </div>
 
 

@@ -1,5 +1,10 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
+	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$category = new Category($_POST['categoryID']);
+		$category->deleteOnDB();
+		header('Location: dashboard.php');
+	}
 ?>
 <!DOCTYPE html>
 <head>
@@ -11,9 +16,11 @@
 <body class="categoryfont">
 
 <?php
-	if(isset($_GET['categoryID'])) {
+	if(isset($_GET['action'])) {
+		die("Cups");
+	} else if(isset($_GET['categoryID'])) {
 		printCategory(new Category($_GET['categoryID']));
-		printf('<div align="right" ><form action="#"> <input type="submit" value="Save" class="buttonbox2"/></form> </div>');
+		printSaveButton();
 	} else {
 		printAllCategories();
 	}
@@ -40,8 +47,8 @@
 			for($j = 0; $j < 2; $j++) {
 				printf('<td width="26" class="black"><input type="checkbox" /></td>');
 				$task = $tasks[$i * 2 + $j];
-				printf('<td width="264" class="%s"><a href="Rincian-tugas.html" target="_parent" class="ordintext">%s</a><br />',
-						(($i + $j) % 2 == 0) ? 'blue' : 'green', $task->taskname);
+				printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
+						(($i + $j) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 				printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
 				printf('Kategori : %s<br />', $task->getCategory()->name);
 				$tags = $task->getTags();
@@ -57,8 +64,8 @@
 			printf("<tr>\n");
 			printf('<td width="26" class="black"><input type="checkbox" /></td>');
 			$task = $tasks[$i * 2];
-			printf('<td width="264" class="%s"><a href="Rincian-tugas.html" target="_parent" class="ordintext">%s</a><br />',
-					(($i) % 2 == 0) ? 'blue' : 'green', $task->taskname);
+			printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
+					(($i) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 			printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
 			printf('Kategori : %s<br />', $task->getCategory()->name);
 			$tags = $task->getTags();
@@ -80,6 +87,10 @@
 			}
 			printCategory($category);
 		}
-		printf('<div align="right" ><form action="#"> <input type="submit" value="Save" class="buttonbox2"/></form> </div>');
+		printSaveButton();
+	}
+	
+	function printSaveButton() {
+		printf('<a class="categbutton" href="kategori.php?action=save">Save</a>');
 	}
 ?>
