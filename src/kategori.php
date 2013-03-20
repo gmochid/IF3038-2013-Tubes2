@@ -1,9 +1,18 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
-	if($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$category = new Category($_POST['categoryID']);
-		$category->deleteOnDB();
-		header('Location: dashboard.php');
+
+	if(isset($_GET['action'])) {
+		if($_GET['action'] == 'changestatus') {
+			$task = new Task($_GET['taskID']);
+			$task->status = $task->status ^ 1;
+			$task->editOnDB();
+		}
+		
+		printAllCategories();
+	} else if(isset($_GET['categoryID'])) {
+		printCategory(new Category($_GET['categoryID']));
+	} else {
+		printAllCategories();
 	}
 ?>
 <!DOCTYPE html>
@@ -14,17 +23,6 @@
 </head>
 
 <body class="categoryfont">
-
-<?php
-	if(isset($_GET['action'])) {
-		die("Cups");
-	} else if(isset($_GET['categoryID'])) {
-		printCategory(new Category($_GET['categoryID']));
-		printSaveButton();
-	} else {
-		printAllCategories();
-	}
-?>
 
 </body>
 </html>
@@ -45,8 +43,10 @@
 			printf("<tr>\n");
 			
 			for($j = 0; $j < 2; $j++) {
-				printf('<td width="26" class="black"><input type="checkbox" /></td>');
 				$task = $tasks[$i * 2 + $j];
+				printf('<td width="26" class="black"><p class="kategori_status">%s</p>
+					<a class="kategori_statuschange" href="kategori.php?action=changestatus&taskID=%d">(change)</a></td>', 
+					($task->status == 0) ? "DONE" : "NOT-DONE", $task->id);
 				printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
 						(($i + $j) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 				printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
@@ -61,9 +61,11 @@
 			printf("</tr>\n");
 		}
 		if(sizeof($tasks) % 2 != 0) {
-			printf("<tr>\n");
-			printf('<td width="26" class="black"><input type="checkbox" /></td>');
 			$task = $tasks[$i * 2];
+			printf("<tr>\n");
+			printf('<td width="26" class="black"><p class="kategori_status">%s</p>
+				<a class="kategori_statuschange" href="kategori.php?action=changestatus&taskID=%d">(change)</a></td>', 
+				($task->status == 0) ? "DONE" : "NOT-DONE", $task->id);
 			printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
 					(($i) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 			printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
@@ -87,10 +89,5 @@
 			}
 			printCategory($category);
 		}
-		printSaveButton();
-	}
-	
-	function printSaveButton() {
-		printf('<a class="categbutton" href="kategori.php?action=save">Save</a>');
 	}
 ?>

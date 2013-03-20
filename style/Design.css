@@ -658,3 +658,14 @@ a#register_pop:hover {
 	display:none;
 }
 
+.kategori_status{
+	font-family: "Arial Narrow";
+	color: #FFFF00;
+	font-weight: bolder; 
+}
+
+.kategori_statuschange{
+	font-family: "Arial Narrow";
+	color: #FFFFFF; 
+}
+
