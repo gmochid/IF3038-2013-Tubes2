@@ -11,6 +11,8 @@ window.onload = function() {
 	$id("rincianbutton-save").style.visibility = 'hidden';
 	
 	hideClass('delete');
+	tagHints();
+	assigneeHints();
 }
 
 function edittask() {
@@ -41,18 +43,64 @@ function savetask() {
 	hideClass('delete');
 }
 
-function hideClass(classname) {
-	elements = getElementsByClassName(document, classname);
-	for(i = 0; i < elements.length; i++) {
-		elements[i].style.visibility = 'hidden';
+function tagHints() {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
 	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			deleteAllChildElements('hintlist-tag');
+			response = JSON.parse(xmlhttp.responseText);
+			
+			for(i = 0; i < response.length; i++) {
+				x = document.createElement('option');
+				x.value = response[i];
+				$id('hintlist-tag').appendChild(x);
+			}
+		}
+	}
+	str = $id('rincianinput-tag');
+	xmlhttp.open("GET","rinciantugasAJAX.php?action=tag&taskid=5",true);
+	xmlhttp.send();
 }
 
-function showClass(classname) {
-	elements = getElementsByClassName(document, classname);
-	for(i = 0; i < elements.length; i++) {
-		elements[i].style.visibility = 'visible';
+function assigneeHints() {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
 	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			deleteAllChildElements('hintlist-assignee');
+			response = JSON.parse(xmlhttp.responseText);
+			
+			for(i = 0; i < response.length; i++) {
+				x = document.createElement('option');
+				x.value = response[i];
+				$id('hintlist-assignee').appendChild(x);
+			}
+		}
+	}
+	str = $id('rincianinput-assignee');
+	xmlhttp.open("GET","rinciantugasAJAX.php?action=assignee&taskid=5",true);
+	xmlhttp.send();
 }
-
-function tagHints()

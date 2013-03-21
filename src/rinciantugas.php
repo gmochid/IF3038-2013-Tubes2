@@ -61,7 +61,8 @@
    	    	
    	    </ul>
    	    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-assignee">
-   	    	<input type="text" id="rincianinput-assignee" name="assignee"><br>
+   	    	<input type="text" id="rincianinput-assignee" name="assignee" list="hintlist-assignee"><br>
+   	    	<datalist id="hintlist-assignee"></datalist>
    	    	<input type="submit" id="rincianinput-assignee-submit" value="submit"><br>
    	    </form>
    	    <br><a>Tag :</a><br>
@@ -77,7 +78,8 @@
    	    	?>
    	    </ul>
    	    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-tag">
-   	  		<input type="text" id="rincianinput-tag" name="tag" onkeyup="tagHints()"><br>
+   	  		<input type="text" id="rincianinput-tag" name="tag" list="hintlist-tag"><br>
+   	  		<datalist id="hintlist-tag"></datalist>
    	  		<input type="submit" id="rincianinput-tag-submit" value="submit"><br>
    	  	</form>
    	  	<br><a>Status : <?php echo $task->status == 1 ? "DONE" : "NOT-DONE"; ?></a><br>

@@ -57,3 +57,24 @@ function getElementsByClassName(node,classname) {
     })(classname, node);
   }
 }
+
+function deleteAllChildElements(id) {
+	var myNode = document.getElementById(id);
+	while (myNode.firstChild) {
+	    myNode.removeChild(myNode.firstChild);
+	}
+}
+
+function hideClass(classname) {
+	elements = getElementsByClassName(document, classname);
+	for(i = 0; i < elements.length; i++) {
+		elements[i].style.visibility = 'hidden';
+	}
+}
+
+function showClass(classname) {
+	elements = getElementsByClassName(document, classname);
+	for(i = 0; i < elements.length; i++) {
+		elements[i].style.visibility = 'visible';
+	}
+}

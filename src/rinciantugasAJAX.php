@@ -22,6 +22,7 @@
 		}
 		
 		// query the associated username
+		/*
 		$q = $_GET['q'];
 		$hints = array();
 		foreach ($res as $r) {
@@ -31,8 +32,9 @@
 				}
 			}
 		}
+		 */
 		
-		return json_encode($hints);
+		print_r(json_encode($res));
     } else if($_GET['action'] == 'tag') {
     	$task = new Task($_GET['taskid']);
 		
@@ -48,6 +50,7 @@
 		foreach ($tags as $tag) {
 			$tagnames[] = $tag->tagname;
 		}
+		$tagnames = array_unique($tagnames);
 		
 		// remove tag that already exist
 		$res = array();
@@ -56,9 +59,9 @@
 				$res[] = $tagname;
 			}
 		}
-		$res = array_unique($res);
 		
 		// query the associated tag
+		/*
 		$q = $_GET['q'];
 		$hints = array();
 		foreach ($res as $r) {
@@ -68,8 +71,8 @@
 				}
 			}
 		}
+		*/
 		
-		print_r(json_encode($hints));
-		return json_encode($hints);
+		print_r(json_encode($res));
     } 
 ?>
