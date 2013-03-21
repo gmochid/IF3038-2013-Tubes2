@@ -6,6 +6,7 @@ window.onload = function() {
 	$id("rincianinput-form-deadline").style.visibility = 'hidden';
 	$id("rincianinput-form-assignee").style.visibility = 'hidden';
 	$id("rincianinput-form-status").style.visibility = 'hidden';
+	$id("rincianinput-form-attachment").style.visibility = 'hidden';
 	$id("rincian-deadline").innerHTML = $id("rincianinput-deadline").value;
 	$id("rincianbutton-save").style.visibility = 'hidden';
 	
@@ -17,6 +18,7 @@ function edittask() {
 	$id("rincianinput-form-deadline").style.visibility = 'visible';
 	$id("rincianinput-form-assignee").style.visibility = 'visible';
 	$id("rincianinput-form-status").style.visibility = 'visible';
+	$id("rincianinput-form-attachment").style.visibility = 'visible';
 	$id("rincian-deadline").style.visibility = 'hidden';
 	
 	$id("rincianbutton-save").style.visibility = 'visible';
@@ -30,6 +32,7 @@ function savetask() {
 	$id("rincianinput-form-deadline").style.visibility = 'hidden';
 	$id("rincianinput-form-assignee").style.visibility = 'hidden';
 	$id("rincianinput-form-status").style.visibility = 'hidden';
+	$id("rincianinput-form-attachment").style.visibility = 'hidden';
 	$id("rincian-deadline").style.visibility = 'visible';
 	
 	$id("rincianbutton-save").style.visibility = 'hidden';

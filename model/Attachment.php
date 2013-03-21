@@ -61,6 +61,8 @@
 			$stmt = sprintf($format, $this->id);
 			$result = mysqli_query($db, $stmt);
 			
+			unlink($this->getPath());
+			
 			$db->close();
 		}
 		

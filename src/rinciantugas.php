@@ -92,17 +92,53 @@
     <?php
     	foreach ($attachments as $attachment) {
     		if($attachment->type == 'file') {
-				printf('<a href="%s"> %s </a> <br><br>' , $attachment->getPath(), $attachment->filename);
+				printf('<a href="%s"> %s </a>', $attachment->getPath(), $attachment->filename);
+				printf('<br>');
 			} else if($attachment->type == 'image') {
-				printf('%s <br> <img src="%s"></img> <br><br>' , $attachment->filename, $attachment->getPath());
+				printf('%s<br><img src="%s"></img>' , $attachment->filename, $attachment->getPath());
+				printf('<br>');
 			} else if($attachment->type == 'video') {
 				
 				printf('%s<br><video width="320" height="240" controls>', $attachment->filename);
 				printf('<source src="%s">', $attachment->getPath());
-				printf('</video><br><br>');
+				printf('</video>');
+				printf('<br>');
 			}
+			printf('<a class="delete" href="rinciantugas2.php?action=delete&attachmentid=%s">(delete)</a>', $attachment->id);
+			printf('<br><br>');
 		}
     ?>
+    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-attachment"  enctype="multipart/form-data">
+    	<div class="field1">File</div>
+    	<div class="iinfo" id="taskfile_info"></div>
+   	  	<div class="fieldfile">
+			<input type="file" id="taskfile" name="attachment"/>
+		</div>
+		<div class="fieldhelp">
+			*.txt;*.doc;*.docx;*.pdf
+		</div>
+		<div class="field1">
+			Pic
+		</div>
+        <div class="iinfo" id="taskpic_info"></div>
+		<div class="fieldfile">
+			<input type="file" id="taskpic" name="attachment2"/>
+		</div>
+		<div class="fieldhelp">
+			*.png;*.bmp;*.jpg;*.jpeg
+		</div>
+		<div class="field1">
+			Video
+		</div>
+        <div class="iinfo" id="taskvideo_info"></div>
+		<div class="fieldfile">
+			<input type="file" id="taskvideo" name="attachment3"/>
+		</div>
+		<div class="fieldhelp">
+			*.mp4;*.avi;*.wmv;*.mkv
+		</div>
+   	  	<input type="submit" id="rincianinput-status-submit" value="submit"><br>
+   	</form>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
 	<input type="button" value="Save Task" class="buttonbox2" id="rincianbutton-save" onclick="savetask()"/>
 </div>
