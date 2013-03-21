@@ -1,7 +1,7 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
     $dbg = new DBGetter();
-	$categories = $dbg->getAllCategory();
+	$categories = $dbg->getCategoriesFromUsername('gmochid2');
 	
 	if((isset($_POST['category'])) && (isset($_POST['name']))) {
 		$len = sizeof($categories);
@@ -10,13 +10,13 @@
 		$category->addOnDB();
 		$category->setUsers($_POST['name'].';gmochid2');
 		
-		$categories = $dbg->getAllCategory();
+		$categories = $dbg->getCategoriesFromUsername('gmochid2');
 	} else if((isset($_GET['action'])) && (isset($_GET['categoryID']))) {
 		if($GET['action'] = 'delete') {
 			$category = new Category($_GET['categoryID']);
 			$category->deleteOnDB();
 			
-			$categories = $dbg->getAllCategory();
+			$categories = $dbg->getCategoriesFromUsername('gmochid2');
 		}
 	}
 ?>

@@ -46,7 +46,7 @@
 				$task = $tasks[$i * 2 + $j];
 				printf('<td width="26" class="black"><p class="kategori_status">%s</p>
 					<a class="kategori_statuschange" href="kategori.php?action=changestatus&taskID=%d">(change)</a></td>', 
-					($task->status == 0) ? "DONE" : "NOT-DONE", $task->id);
+					($task->status == 1) ? "DONE" : "NOT-DONE", $task->id);
 				printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
 						(($i + $j) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 				printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
@@ -65,7 +65,7 @@
 			printf("<tr>\n");
 			printf('<td width="26" class="black"><p class="kategori_status">%s</p>
 				<a class="kategori_statuschange" href="kategori.php?action=changestatus&taskID=%d">(change)</a></td>', 
-				($task->status == 0) ? "DONE" : "NOT-DONE", $task->id);
+				($task->status == 1) ? "DONE" : "NOT-DONE", $task->id);
 			printf('<td width="264" class="%s"><a href="rinciantugas.php?taskid=%s" target="_parent" class="ordintext">%s</a><br />',
 					(($i) % 2 == 0) ? 'blue' : 'green', $task->id, $task->taskname);
 			printf('Deadline : <b class="redtext">%s</b><br />', $task->deadline);
@@ -82,7 +82,7 @@
 
 	function printAllCategories() {
 		$dbg = new DBGetter();
-		$categories = $dbg->getAllCategory();
+		$categories = $dbg->getCategoriesFromUsername('gmochid2');
 		foreach ($categories as $category) {
 			if(sizeof($dbg->getTasksFromCategory($category->id)) == 0) {
 				continue;

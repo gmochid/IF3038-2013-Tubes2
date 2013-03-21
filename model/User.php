@@ -38,6 +38,17 @@
 			return $this->password == $password;
 		}
 		
+		public function isCategoried($categoryid) {
+			$dbg = new DBGetter();
+			$categories = $dbg->getCategoriesFromUsername($this->username);
+			foreach ($categories as $category) {
+				if($category->id == $categoryid) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
 		/* DATABASE FUNCTION UTILITY */
 		public function addOnDB() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);

@@ -50,5 +50,5 @@
     	}
     }
 	
-	//header(sprintf("Location: rinciantugas.php?taskid=%s", $task->id));
+	header(sprintf("Location: rinciantugas.php?taskid=%s", $task->id));
 ?>

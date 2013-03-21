@@ -76,11 +76,16 @@
 			$result = mysqli_query($db, $stmt);
 			
 			$arr_user = explode(',', $users);
-			echo $users;
 			foreach ($arr_user as $user) {
-				$format = "INSERT INTO `task_user` (`taskID`, `userID`) VALUES ('%s','%s');";
-				$stmt = sprintf($format, $this->id, $user);
-				$result = mysqli_query($db, $stmt);
+				$u = new User($user);
+				if($u->fullname == null)
+					continue;
+				if($u->isCategoried($this->categoryID)) {
+					echo "a";
+					$format = "INSERT INTO `task_user` (`taskID`, `userID`) VALUES ('%s','%s');";
+					$stmt = sprintf($format, $this->id, $user);
+					$result = mysqli_query($db, $stmt);
+				}
 			}
 			
 			$db->close();
