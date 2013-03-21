@@ -74,7 +74,7 @@
 			
 			$tags = array();
 			while($row = $result->fetch_row()) {
-				$tags[] = new Tag($row[0]);
+				$tags[] = new Tag($row[0], $row[1]);
 			}
 			
 			$db->close();
@@ -259,7 +259,7 @@
 			
 			$users = array();
 			while($row = $result->fetch_row()) {
-				$users[] = new User($row[0]);
+				$users[] = new User($row[1]);
 			}
 			
 			$db->close();
