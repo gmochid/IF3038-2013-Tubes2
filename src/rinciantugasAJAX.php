@@ -56,6 +56,7 @@
 				$res[] = $tagname;
 			}
 		}
+		$res = array_unique($res);
 		
 		// query the associated tag
 		$q = $_GET['q'];

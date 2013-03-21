@@ -77,7 +77,7 @@
    	    	?>
    	    </ul>
    	    <form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-tag">
-   	  		<input type="text" id="rincianinput-tag" name="tag"><br>
+   	  		<input type="text" id="rincianinput-tag" name="tag" onkeyup="tagHints()"><br>
    	  		<input type="submit" id="rincianinput-tag-submit" value="submit"><br>
    	  	</form>
    	  	<br><a>Status : <?php echo $task->status == 1 ? "DONE" : "NOT-DONE"; ?></a><br>

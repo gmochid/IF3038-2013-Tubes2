@@ -54,3 +54,5 @@ function showClass(classname) {
 		elements[i].style.visibility = 'visible';
 	}
 }
+
+function tagHints()
