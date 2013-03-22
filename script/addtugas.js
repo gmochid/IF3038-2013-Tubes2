@@ -7,8 +7,25 @@ window.onload = function() {
 	getAssigneeHint();
 }
 
+function isValid() {
+	var requirement = Array();
+	
+	requirement[0] = ($id('taskname').value.length != 0);
+	requirement[1] = ($id('bir').value.length != 0);
+	
+	for(i = 0; i < requirement.length; i++) {
+		if(!requirement[i])
+			return false;
+	}
+	return true;
+}
+
 function checkInput() {
-	$id('addtugas-submit').disabled = false;
+	if(isValid()) {
+		$id('addtugas-submit').disabled = false;
+	} else {
+		$id('addtugas-submit').disabled = true;
+	}
 }
 
 function getAssigneeHint() {

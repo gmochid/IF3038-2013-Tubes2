@@ -44,7 +44,7 @@
             </div>
             <div class="iinfo" id="taskname_info"></div>
             <div class="field">
-				<input type="text" id="taskname" onchange="validate_taskname()" name="name"/>
+				<input type="text" id="taskname" onkeyup="checkInput()" onchange="validate_taskname()" name="name"/>
 			</div>
 			<div class="fieldhelp">
 				Maksimal 25 karakter. Tidak boleh menggunakan karakter khusus.
@@ -85,7 +85,7 @@
             </div>
             <div class="iinfo" id="birth"></div>
             <div class="field">
-				<input type="text" id="bir" class="birthcal" name="deadline">
+				<input type="text" id="bir" class="birthcal" onchange="checkInput()" name="deadline">
                 <input type="button" class="cal" onclick="openCal()" value="calendar"/>
                 
                 <!-- CALENDAR -->
@@ -104,7 +104,7 @@
 										while(dd.length < 2) dd = "0" + dd;
 										document.getElementById('bir').value = yyyy + "-" + mm + "-" + dd;
 										openCal();
-										validateBirthdate();
+										//validateBirthdate();
 									}
 								);
 								
