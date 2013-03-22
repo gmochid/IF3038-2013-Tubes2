@@ -11,14 +11,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Make a Task</title>
     <link rel='stylesheet' type="text/css" href="../style/Design.css"/>
+    <script type="text/javascript" src="../script/global.js"> </script>
     <script type="text/javascript" src="../script/validation.js"> </script>
     <script type="text/javascript" src="../script/calendar.js"></script>
+    <script type="text/javascript" src="../script/addtugas.js"> </script>
 </head>
 
 <body class="main">
 
 <!-- HEADER -->
-
 <div id="header">
 <img src="../images/images/Header_3_ip_01.gif"/><img src="../images/images/Header_3_ip_02.gif" /><a href="Dashboard.html"><img src="../images/images/Header_3_ip_03.gif" /></a><img src="../images/images/Header_3_ip_04.gif"  />
 
@@ -29,7 +30,6 @@
     </ul>
   
 </div>
-    
 <div class="task1">	
 	<div class="task2">
 		<form action="addtugas2.php" method="post" enctype="multipart/form-data">
@@ -125,7 +125,11 @@
 				Assignee
             </div>
             <div class="field">
-				<input type="textarea" name="assignee">
+            	<a id="addtugas-assignee"></a>
+            	<br>
+				<input id="addtugas-assigneeinput" type="textarea" name="assignee" list="hintlist-assignee">
+   	    		<datalist id="hintlist-assignee"></datalist>
+				<input type="button" onclick="addAssignee()" value="Add"/>
 			</div>
             <div class="fieldhelp">
 				Peserta Tugas
@@ -141,8 +145,8 @@
 			</div>
             
 			<div class="field1">
-				<input type="text" name="categoryID" value="<?php echo $category->id; ?>" style="visibility: hidden"/>
-				<input type="submit" value="Save"/>
+				<input type="text" name="categoryID" value="<?php echo $category->id; ?>" style="visibility: hidden"/><br>
+				<input id="addtugas-submit" type="submit" value="Save" disabled/>
 			</div>
             
 		</div>
@@ -154,6 +158,6 @@
     By <a href="http://www.facebook.com/patrick.ltobing?fref=ts" target="_blank">Patrick Lumban Tobing</a>, <a href="http://www.facebook.com/hanif.eridaputra" target="_blank">Hanif Eridaputra</a>, <a href="http://www.facebook.com/novriady.saputra.3?fref=ts" target="_blank">Novriady Saputra</a><br />
     Februari 2013
 </div>
-
+<a id='addtugas-categoryid'><?php echo $category->id; ?></a>
 </body>
 </html>

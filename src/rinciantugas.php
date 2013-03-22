@@ -22,7 +22,6 @@
 </head>
 
 <body class="main">
-
 <!-- Header -->
 <div id="header">
 <img src="../images/images/Header_3_ip_01.gif"/><img src="../images/images/Header_3_ip_02.gif" /><a href="Dashboard.html"><img src="../images/images/Header_3_ip_03.gif" /></a><img src="../images/images/Header_3_ip_04.gif"  />
@@ -39,7 +38,6 @@
 <div class="TaskBoard">
 
 <h2 align="center"><?php echo $task->taskname; ?></h2>
-<a id="rinciantugas-taskid"><?php echo $task->id; ?></a>
 <div align="left">
    	<p>
    		<a>Deadline :</a> <br>
@@ -190,7 +188,7 @@
     By <a href="http://www.facebook.com/patrick.ltobing?fref=ts" target="_blank">Patrick Lumban Tobing</a>, <a href="http://www.facebook.com/hanif.eridaputra" target="_blank">Hanif Eridaputra</a>, <a href="http://www.facebook.com/novriady.saputra.3?fref=ts" target="_blank">Novriady Saputra</a><br />
     Februari 2013
 </div>
-
+<a id="rinciantugas-taskid"><?php echo $task->id; ?></a>
 
 </body>
 </html>
