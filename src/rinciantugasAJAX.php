@@ -2,7 +2,7 @@
 	include_once dirname(__FILE__).'\..\include.php';
 
 	$dbg = new DBGetter();
-    if($_GET['action'] == 'assignee') {
+    if($_GET['action'] == 'assigneeHint') {
     	$task = new Task($_GET['taskid']);
     	$assignees = $dbg->getUsersFromCategory($task->categoryID);
 		
@@ -35,7 +35,7 @@
 		 */
 		
 		print_r(json_encode($res));
-    } else if($_GET['action'] == 'tag') {
+    } else if($_GET['action'] == 'tagHint') {
     	$task = new Task($_GET['taskid']);
 		
     	$res = $task->getTags();
@@ -74,5 +74,9 @@
 		*/
 		
 		print_r(json_encode($res));
-    } 
+    } else if($_GET['action'] == 'status') {
+    	$task = new Task($_GET['taskid']);
+		$task->status = $task->status ^ 1;
+		$task->editOnDB(); 
+    }
 ?>

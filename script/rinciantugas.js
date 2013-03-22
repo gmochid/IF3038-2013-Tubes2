@@ -2,10 +2,10 @@
  * @author gmochid
  */
 window.onload = function() {
+	$id("rinciantugas-taskid").style.visibility = 'hidden';
 	$id("rincianinput-form-tag").style.visibility = 'hidden';
 	$id("rincianinput-form-deadline").style.visibility = 'hidden';
 	$id("rincianinput-form-assignee").style.visibility = 'hidden';
-	$id("rincianinput-form-status").style.visibility = 'hidden';
 	$id("rincianinput-form-attachment").style.visibility = 'hidden';
 	$id("rincian-deadline").innerHTML = $id("rincianinput-deadline").value;
 	$id("rincianbutton-save").style.visibility = 'hidden';
@@ -19,7 +19,6 @@ function edittask() {
 	$id("rincianinput-form-tag").style.visibility = 'visible';
 	$id("rincianinput-form-deadline").style.visibility = 'visible';
 	$id("rincianinput-form-assignee").style.visibility = 'visible';
-	$id("rincianinput-form-status").style.visibility = 'visible';
 	$id("rincianinput-form-attachment").style.visibility = 'visible';
 	$id("rincian-deadline").style.visibility = 'hidden';
 	
@@ -33,7 +32,6 @@ function savetask() {
 	$id("rincianinput-form-tag").style.visibility = 'hidden';
 	$id("rincianinput-form-deadline").style.visibility = 'hidden';
 	$id("rincianinput-form-assignee").style.visibility = 'hidden';
-	$id("rincianinput-form-status").style.visibility = 'hidden';
 	$id("rincianinput-form-attachment").style.visibility = 'hidden';
 	$id("rincian-deadline").style.visibility = 'visible';
 	
@@ -70,7 +68,7 @@ function tagHints() {
 		}
 	}
 	str = $id('rincianinput-tag');
-	xmlhttp.open("GET","rinciantugasAJAX.php?action=tag&taskid=5",true);
+	xmlhttp.open("GET","rinciantugasAJAX.php?action=tagHint&taskid=5",true);
 	xmlhttp.send();
 }
 
@@ -101,6 +99,31 @@ function assigneeHints() {
 		}
 	}
 	str = $id('rincianinput-assignee');
-	xmlhttp.open("GET","rinciantugasAJAX.php?action=assignee&taskid=5",true);
+	taskid = $id('rinciantugas-taskid').innerHTML;
+	xmlhttp.open("GET","rinciantugasAJAX.php?action=assigneeHint&taskid=" + taskid,true);
+	xmlhttp.send();
+}
+
+function sendStatus() {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+		}
+	}
+	
+	taskid = $id('rinciantugas-taskid').innerHTML;
+	xmlhttp.open("GET","rinciantugasAJAX.php?action=status&taskid=" + taskid,true);
 	xmlhttp.send();
 }

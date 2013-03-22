@@ -39,6 +39,7 @@
 <div class="TaskBoard">
 
 <h2 align="center"><?php echo $task->taskname; ?></h2>
+<a id="rinciantugas-taskid"><?php echo $task->id; ?></a>
 <div align="left">
    	<p>
    		<a>Deadline :</a> <br>
@@ -82,13 +83,8 @@
    	  		<datalist id="hintlist-tag"></datalist>
    	  		<input type="submit" id="rincianinput-tag-submit" value="submit"><br>
    	  	</form>
-   	  	<br><a>Status : <?php echo $task->status == 1 ? "DONE" : "NOT-DONE"; ?></a><br>
-   	  	<a id="rincian-status"></a>
-   	  	<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-status">
-	   	  	<input type="radio" name="status" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
-	   	  	<input type="radio" name="status" value="0" <?php echo $task->status == 1 ? "":"checked"; ?> > NOT-DONE<br>
-	   	  	<input type="submit" id="rincianinput-status-submit" value="submit"><br>
-	   	</form>
+   	  	<br><a>Status :<br>
+	   	<input type="checkbox" name="status" onclick="sendStatus()" value="1" <?php echo $task->status == 1 ? "checked":""; ?> > DONE<br>
     </p>
     <p> Attachment: </p>
     <?php
