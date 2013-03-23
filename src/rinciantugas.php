@@ -142,12 +142,13 @@
 	<ul>
 		<?php
 			$comments = $task->getComments();
+			print_r($comments);
 			
 			foreach ($comments as $comment) {
 				if ($comment->taskid == $task->id) {
-					printf("<li id='rincian-asignee-%s'>%s ", $comment->userID, $comment->userID);
+					printf("<li id='rincian-asignee-%s'>%s ", $comment->username, $comment->username);
 					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&username=%s">(delete)</a>', $task->id, $user->username);
-					printf("<li id='rincian-comment-%s'>%s ", $comment->commentID, $comment->content);
+					printf("<li id='rincian-comment-%s'>%s ", $comment->id, $comment->content);
 					printf("</li>");
 				}
 			}

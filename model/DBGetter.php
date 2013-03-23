@@ -154,7 +154,7 @@
 			
 			$format = "SELECT * FROM `comment` WHERE `taskID` = '%s';";
 			$stmt = sprintf($format, $taskid);
-			$result = mysqli_query($db, $format);
+			$result = mysqli_query($db, $stmt);
 			
 			$comments = array();
 			while($row = $result->fetch_row()) {
