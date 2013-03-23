@@ -10,7 +10,7 @@
 				echo "<a href='index.html'>return</a>";
 			} else if($user->authenticate($_POST['password'])) {
 				session_start();
-				$_SESSION['username'] = $_GET['username'];
+				$_SESSION['username'] = $_POST['username'];
 				header('Location: src/dashboard.php');
 			} else {
 				echo "Password not match<br>";
@@ -18,6 +18,11 @@
 			}
 		} else {
 			session_start();
+			$_SESSION['username'] = $_POST['username'];
+			$user = new User($_POST['username']);
+			$user->setData($_POST['password'], $_POST['fullname'], "Jakarta", $POST['birthdate'], $_POST['email'], $POST['avatar_path']);
+			$user->addOnDB();
+			header('Location: src/dashboard.php');
 		}
 	} else if($_GET['action'] == 'create') {
 		session_start();
