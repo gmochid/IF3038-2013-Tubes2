@@ -28,7 +28,10 @@
         <li> <a href="profile.html"> Profile </a> </li>
         <li> <a href="../Index.html"> Log Out </a> </li>
     </ul>
-  
+  <form method="post" action="searchresult.php">
+    	<input type="text" name="query" />
+    	<input type="submit" value="Search" />
+    </form>
 </div>
 <div class="task1">	
 	<div class="task2">

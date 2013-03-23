@@ -85,7 +85,7 @@
 		public function getAllUser() {
 			$db = mysqli_connect($GLOBALS['host'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['dbname']);
 			
-			$format = "SELECT * FROM `task` WHERE 1;";
+			$format = "SELECT * FROM `user` WHERE 1;";
 			$result = mysqli_query($db, $format);
 			
 			$users = array();
