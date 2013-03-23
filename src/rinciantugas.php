@@ -28,7 +28,7 @@
 
   	<ul class="navigation">
 		<li> <a href="dashboard.php"> Dashboard </a> </li>
-        <li> <a href="profile.html"> Profile </a> </li>
+        <li> <a href="profile.php?username=<?php echo $_SESSION['username']; ?>"> Profile </a> </li>
         <li> <a href="../Index.html"> Log Out </a> </li>
     </ul>
   <form method="post" action="searchresult.php">
@@ -148,7 +148,7 @@
 				if ($comment->taskid == $task->id) {
 					printf("<li id='rincian-asignee-%s'>%s ", $comment->username, $comment->username);
 					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&username=%s">(delete)</a>', $task->id, $user->username);
-					printf("<li id='rincian-comment-%s'>%s ", $comment->id, $comment->content);
+					printf("<li id='rincian-comment-%s'>%s ", $comment->i, $comment->content);
 					printf("</li>");
 				}
 			}

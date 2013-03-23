@@ -57,7 +57,7 @@
 
   	<ul class="navigation">
 		<li> <a href="dashboard.php"> Dashboard </a> </li>
-        <li> <a href="profile.html"> Profile </a> </li>
+        <li> <a href="profile.php?username=<?php echo $_SESSION['username']; ?>"> Profile </a> </li>
         <li> <a href="../Index.html"> Log Out </a> </li>
     </ul>
   <form method="post" action="searchresult.php">
