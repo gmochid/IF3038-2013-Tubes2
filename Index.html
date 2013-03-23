@@ -35,21 +35,23 @@
 <!-- Popup Login -->
     <a href="#x" class="overlay" id="login_form"> </a>
         <div class="popup">
+        	<form>
             <h2>User Login</h2>
             <p>Please enter Username and Password</p>
             <div>
                 <label for="userlogin">Username</label>
-                <input type="text" id="userlogin" value="" />
+                <input type="text" id="userlogin" name="username" value="" />
             </div>
             <div>
                 <label for="passlogin">Password</label>
-                <input type="password" id="passlogin" value="" />
+                <input type="password" id="passlogin" name="password" value="" />
             </div>
             <div align="right">
-            	<input name="Button" type="button" value="Login" onClick="login()"/>
+            	<input type="submit" value="Login"/>
             </div>
 
             <a class="close" href="#close"></a>
+            </form>
   		</div>
     
     <!-- Popup Register -->
