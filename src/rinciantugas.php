@@ -138,6 +138,27 @@
 		</div>
    	  	<input type="submit" id="rincianinput-status-submit" value="submit"><br>
    	</form>
+	<br><a>Comment :</a><br> 
+	<ul>
+		<?php
+			$comments = $task->getComments();
+			
+			foreach ($comments as $comment) {
+				if ($comment->taskid == $task->id) {
+					printf("<li id='rincian-asignee-%s'>%s ", $comment->userID, $comment->userID);
+					printf('<a class="delete" href="rinciantugas2.php?taskid=%s&action=delete&username=%s">(delete)</a>', $task->id, $user->username);
+					printf("<li id='rincian-comment-%s'>%s ", $comment->commentID, $comment->content);
+					printf("</li>");
+				}
+			}
+		?>
+		
+	</ul>
+	<form action="rinciantugas2.php?taskid=<?php echo $task->id; ?>" method="post" id="rincianinput-form-assignee">
+		<input type="text" id="rincianinput-assignee" name="assignee" list="hintlist-assignee"><br>
+		<datalist id="hintlist-assignee"></datalist>
+		<input type="submit" id="rincianinput-assignee-submit" value="submit"><br>
+	</form>
 	<input type="button" value="Edit Task" class="buttonbox2" id="rincianbutton-edit" onclick="edittask()"/>
 	<input type="button" value="Save Task" class="buttonbox2" id="rincianbutton-save" onclick="savetask()"/>
 </div>
