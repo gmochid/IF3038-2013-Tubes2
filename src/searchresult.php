@@ -2,12 +2,13 @@
     include_once dirname(__FILE__).'\..\include.php';
     $dbg = new DBGetter();
 	
+	session_start();
+	
 	$result_category = array();
 	$result_task = array();
 	$result_user = array();
 	
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    	print_r($_POST);
     	$q = $_POST['query'];
 		
 		$categories = $dbg->getAllCategory();
@@ -29,9 +30,7 @@
 		}
 		
 		$users = $dbg->getAllUser();
-		print_r($users);
 		foreach ($users as $user) {
-			echo '<br>'.$user->username;
 			if(strlen($q) <= strlen($user->username)) {
 				if(strtolower($q) == strtolower(substr($user->username, 0, strlen($q)))) {
 					$result_user[] = $user;

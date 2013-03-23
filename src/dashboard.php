@@ -1,22 +1,23 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
     $dbg = new DBGetter();
-	$categories = $dbg->getCategoriesFromUsername('gmochid2');
+	session_start();
+	$categories = $dbg->getCategoriesFromUsername($_SESSION['username']);
 	
 	if((isset($_POST['category'])) && (isset($_POST['name']))) {
 		$len = sizeof($categories);
 		$category = new Category($len + 1);
-		$category->setData($_POST['category'], 'gmochid2');
+		$category->setData($_POST['category'], $_SESSION['username']);
 		$category->addOnDB();
-		$category->setUsers($_POST['name'].';gmochid2');
+		$category->setUsers($_POST['name'].';'.$_SESSION['username']);
 		
-		$categories = $dbg->getCategoriesFromUsername('gmochid2');
+		$categories = $dbg->getCategoriesFromUsername($_SESSION['username']);
 	} else if((isset($_GET['action'])) && (isset($_GET['categoryID']))) {
 		if($GET['action'] = 'delete') {
 			$category = new Category($_GET['categoryID']);
 			$category->deleteOnDB();
 			
-			$categories = $dbg->getCategoriesFromUsername('gmochid2');
+			$categories = $dbg->getCategoriesFromUsername($_SESSION['username']);
 		}
 	}
 ?>
@@ -56,7 +57,7 @@
     <?php
     	foreach ($categories as $category) {
 			printf('<li>');
-			if($category->creatorID == 'gmochid2') {
+			if($category->creatorID == $_SESSION['username']) {
 				printf('<a href="dashboard.php?action=delete&categoryID=%s"><img src="../images/delete.png"></img></a>', $category->id);
 			}
 			printf('<a href="kategori.php?categoryID=%s" target="categoryframe" id="%d" onclick="selectCategory(\'%s\')">%s</a>', $category->id, $category->id, $category->id, $category->name);

@@ -1,9 +1,11 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
 	
+	session_start();
+	
 	$task = new Task(DB_IDGenerator('task'));
 	
-	$task->username = 'gmochid2';
+	$task->username = $_SESSION['username'];
 	$task->categoryID = $_POST['categoryID'];
 	$task->deadline = $_POST['deadline'];
 	$task->taskname = $_POST['name'];
@@ -14,7 +16,7 @@
 	$task->setTags($_POST['tag']);
 	
 	// ASSIGNEE
-	$users = $_POST['assignee'] . ',gmochid2';
+	$users = $_POST['assignee'] . ','. $_SESSION['username'];
 	$task->setUsers($users);
 	
 	// ATTACHMENT

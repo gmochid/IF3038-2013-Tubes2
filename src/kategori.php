@@ -1,5 +1,7 @@
 <?php
 	include_once dirname(__FILE__).'\..\include.php';
+	
+	session_start();
 
 	if(isset($_GET['action'])) {
 		if($_GET['action'] == 'changestatus') {
@@ -82,7 +84,7 @@
 
 	function printAllCategories() {
 		$dbg = new DBGetter();
-		$categories = $dbg->getCategoriesFromUsername('gmochid2');
+		$categories = $dbg->getCategoriesFromUsername($_SESSION['username']);
 		foreach ($categories as $category) {
 			if(sizeof($dbg->getTasksFromCategory($category->id)) == 0) {
 				continue;
